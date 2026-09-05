@@ -1,148 +1,119 @@
-# CodeForge
+CodeForge
 
-A LeetCode-style platform for practicing C++ and data structures & algorithms — real g++ compilation in an isolated sandbox, 45 hand-written problems across 9 topics, and zero accounts. Your progress, streaks, submissions, and bookmarks live entirely in your browser's `localStorage`.
+A LeetCode-style platform for practicing C++ and Data Structures & Algorithms — with real g++ compilation, 45 hand-written problems across 9 topics, and zero accounts. Your progress, streaks, submissions, and bookmarks live entirely in your browser's localStorage.
 
 No login. No database. No tracking.
 
-## Features
+Overview
 
-- **45 problems** across Arrays, Linked List, Stack, Queue, Searching, Sorting, Trees, Heap, and Graphs
-- **Real C++ execution** — your code is compiled and run with actual `g++`, not simulated
-- **Run vs. Submit** — Run checks your code against the visible sample tests; Submit grades it against the full hidden test suite
-- **Five verdicts** — Accepted, Wrong Answer, Compilation Error, Runtime Error, Time Limit Exceeded — each with a per-test breakdown
-- **Monaco-powered editor** (the engine behind VS Code) with C++ syntax highlighting, per-problem persistence, and adjustable font size
-- **Progressive hints** per problem
-- **Dashboard** — solved count, acceptance rate, current/longest streak, a 7-day activity strip, per-topic progress, and unlockable achievements
-- **Bookmarks** and full **submission history**
-- **Dark / light mode**
-- Fully responsive, from small phones up through desktop
+CodeForge is a self-contained coding practice environment built for anyone learning or sharpening their Data Structures & Algorithms skills in C++. Pick a topic, open a problem, write your solution in a full-featured in-browser editor, and get it compiled and run against real test cases — just like a competitive programming judge.
 
-## Tech stack
+Unlike many "LeetCode clone" projects that simulate code execution or rely on third-party APIs, CodeForge runs a dedicated execution service that compiles and executes your C++ code directly using g++, giving you authentic compiler errors, runtime behavior, and timing.
 
-| Layer | Choice |
-|---|---|
-| Frontend | React 19 + TypeScript + Vite + Tailwind CSS |
-| Editor | Monaco Editor (`@monaco-editor/react`) |
-| State | Zustand, persisted to `localStorage` |
-| Routing | React Router |
-| Execution service | Node.js + Express |
-| Compilation/execution | Local `g++` on PATH via `child_process` — no Docker |
-
-## Project structure
-
-```
-codeforge/
-├── frontend/                 # The deployable web app (React + Vite) — this is what goes to Netlify
-│   ├── src/
-│   │   ├── pages/            # Route-level pages
-│   │   ├── components/       # UI kit, layout, and problem-workspace components
-│   │   ├── store/            # Zustand store (solved state, streak, submissions, achievements, prefs)
-│   │   ├── lib/               # localStorage wrapper, execution API client, achievement rules
-│   │   └── data/generated/   # Auto-generated public problem data (no hidden tests) — do not hand-edit
-│   └── public/_redirects     # Netlify SPA fallback (client-side routing)
-│
-├── execution-service/        # Separate Node service: compiles & runs untrusted C++ safely
-│   ├── src/
-│   │   ├── index.js          # Express API — POST /run, POST /submit, GET /health
-│   │   ├── sandbox.js        # Compiles + runs code with the local g++ via child_process
-│   │   ├── grader.js         # Diffs actual vs. expected output, decides the verdict
-│   │   └── data/problems-full.json  # Full problem data INCLUDING hidden tests — server-only
-│
-├── content/                   # Source of truth for all 45 problems (hand-written, typed)
-├── scripts/generate-problem-data.mjs   # Splits content/ into the two JSON artifacts above
-└── netlify.toml                # Netlify build config (base = frontend)
-```
-
-Problems are written once in `content/*.ts` and split by `scripts/generate-problem-data.mjs` into:
-- `frontend/src/data/generated/problems-public.json` — ships to the browser, **hidden tests stripped out**
-- `execution-service/src/data/problems-full.json` — stays server-side, includes hidden tests
-
-Run the generator any time you add or edit a problem:
-
-```bash
-npm install        # from the repo root, installs esbuild used by the generator
-node scripts/generate-problem-data.mjs
-```
-
-## Running locally
-
-### 1. Frontend
-
-```bash
+Features
+45 problems across 9 core DSA topics: Arrays, Linked List, Stack, Queue, Searching, Sorting, Trees, Heap, and Graphs
+Real C++ execution — code is compiled and run with actual g++, not simulated or mocked
+Run vs. Submit workflow — "Run" checks your code against the visible sample tests for quick iteration; "Submit" grades it against the full hidden test suite for a final verdict
+Five distinct verdicts — Accepted, Wrong Answer, Compilation Error, Runtime Error, and Time Limit Exceeded — each with a detailed per-test breakdown
+Monaco-powered editor — the same editor engine that powers VS Code, with full C++ syntax highlighting, per-problem code persistence, and adjustable font size
+Progressive hints available per problem for when you get stuck
+Personal dashboard — tracks solved count, acceptance rate, current and longest streak, a 7-day activity strip, per-topic progress breakdown, and unlockable achievements
+Bookmarks — save problems to revisit later
+Full submission history — review every past run and submission
+Dark / light mode toggle
+Fully responsive design — works smoothly from small phones up through large desktop screens
+Technologies Used
+Layer	Technology
+Frontend framework	React 19 + TypeScript
+Build tool	Vite
+Styling	Tailwind CSS
+Code editor	Monaco Editor (@monaco-editor/react)
+State management	Zustand (persisted to localStorage)
+Routing	React Router
+Execution service	Node.js + Express
+Compilation & execution	Local g++ via Node's child_process (no Docker)
+Hosting (frontend)	Netlify
+Hosting (execution service)	Any persistent Node host — Render, Railway, Fly.io, or a VPS
+How It Works
+Problem authoring: All 45 problems are written once as structured TypeScript source files, serving as the single source of truth.
+Data generation: A build script splits each problem into two artifacts — a public version (with hidden tests stripped out) that ships to the browser, and a full version (including hidden tests) that stays server-side only.
+Editing & running: Users write C++ in the Monaco-based editor in the browser. Hitting "Run" or "Submit" sends the code to the execution service.
+Compilation & grading: The execution service compiles the submitted code with g++, runs it against the appropriate test set, and diffs actual output against expected output to determine one of five verdicts.
+Results & tracking: Verdicts, per-test breakdowns, streaks, achievements, and submission history are all reflected instantly in the UI and persisted locally in the browser.
+Getting Started
+Prerequisites
+Node.js (v18 or higher) and npm
+g++ installed and available on your system PATH (only required for the Run/Submit code execution feature — browsing problems, the dashboard, and bookmarks all work without it)
+macOS: xcode-select --install
+Linux: usually preinstalled; otherwise sudo apt install g++
+Windows: install via MSYS2 (recommended) or MinGW-w64, or use WSL
+Running the Frontend
+bash
 cd frontend
 npm install
-cp .env.example .env.local     # then fill in VITE_EXECUTION_API_URL once the service below is running
+cp .env.example .env.local
 npm run dev
-```
 
-The app works without the execution service configured — everything except Run/Submit (browsing, topics, dashboard, bookmarks) functions normally, and the workspace shows a clear inline notice instead of failing silently.
+The app runs fully for browsing, topics, dashboard, and bookmarks even without the execution service configured — the problem workspace will show a clear inline notice instead of failing silently if Run/Submit isn't available yet.
 
-### 2. Execution service (optional for local UI work, required for Run/Submit)
+Running the Execution Service
 
-Requires `g++` installed and on PATH (Mac: `xcode-select --install`; Linux: usually preinstalled, else `apt install g++`; Windows: install MinGW-w64 or use WSL).
+The execution service is what actually compiles and runs submitted C++ code, so it's required for Run/Submit to function.
 
-```bash
+bash
 cd execution-service
 npm install
-npm run dev                    # starts the API on http://localhost:8080
-```
+npm run dev
 
-Point the frontend at it by setting `VITE_EXECUTION_API_URL=http://localhost:8080` in `frontend/.env.local`.
+This starts the API on http://localhost:8080 by default.
 
-## Environment variables
+Then, point the frontend at it by setting the following in frontend/.env.local:
 
-**Frontend** (`frontend/.env.local`, see `frontend/.env.example`):
+VITE_EXECUTION_API_URL=http://localhost:8080
 
-| Variable | Purpose |
-|---|---|
-| `VITE_EXECUTION_API_URL` | Base URL of your deployed execution service. Leave unset to run the app with Run/Submit disabled. |
+Restart the frontend dev server after changing this file so the new environment variable takes effect.
 
-**Execution service:**
+Environment Variables
 
-| Variable | Purpose | Default |
-|---|---|---|
-| `PORT` | Port the API listens on | `8080` |
-| `ALLOWED_ORIGIN` | CORS origin allowed to call the API — set this to your Netlify URL in production | `*` |
-| `RUNNER_IMAGE` | Name of the built sandbox image | `codeforge-runner:latest` |
+Frontend (frontend/.env.local):
 
-## Deploying
+Variable	Purpose
+VITE_EXECUTION_API_URL	Base URL of the execution service. If left unset, the app runs normally with Run/Submit disabled.
 
-### Frontend → Netlify
+Execution service:
 
-1. Push this repo to GitHub/GitLab/Bitbucket and connect it in Netlify.
-2. Netlify reads `netlify.toml` at the repo root automatically:
-   - Base directory: `frontend`
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-   - SPA fallback redirect is already handled (both via `netlify.toml` and `frontend/public/_redirects`), so deep links like `/problems/two-sum` won't 404 on refresh.
-3. In **Site settings → Environment variables**, add `VITE_EXECUTION_API_URL` pointing at your deployed execution service (step below). Redeploy after adding it.
-4. Deploy. That's it — Netlify cannot and does not need to run the C++ execution service itself.
+Variable	Purpose	Default
+PORT	Port the API listens on	8080
+ALLOWED_ORIGIN	CORS origin allowed to call the API — set this to your deployed frontend URL in production	*
+RUNNER_IMAGE	Name of the sandbox image, if applicable	codeforge-runner:latest
+Deployment
+Frontend
 
-### Execution service → a real server (not Netlify)
+The frontend is a static Vite build and can be deployed to any static hosting provider (Netlify, Vercel, GitHub Pages, etc.):
 
-This service compiles and runs code directly with `g++` via `child_process` — it needs a real, persistent Node process with `g++` on PATH. That rules out Netlify itself (Functions are serverless/ephemeral with no compiler toolchain and no long-lived process to spawn from), but it's a much lighter requirement than the old Docker setup: any small Linux VPS works, or a host like Render, Railway, or Fly.io that runs a persistent Node service.
+Push the repository to GitHub, GitLab, or Bitbucket and connect it to your hosting provider.
+Set the build command to npm run build and the publish directory to dist, with the frontend folder as the base directory.
+Add the VITE_EXECUTION_API_URL environment variable pointing to your deployed execution service, then redeploy.
+Client-side routing (deep links like /problems/two-sum) is handled via SPA fallback redirects.
+Execution Service
 
-```bash
-# On the server:
+The execution service compiles and runs code directly with g++ via child_process, so it needs a persistent Node process with g++ on PATH — this rules out serverless/ephemeral platforms. Suitable options include a small Linux VPS or a host like Render, Railway, or Fly.io.
+
+bash
 git clone <your-repo-url>
 cd codeforge/execution-service
 
 sudo apt install g++    # or your distro's equivalent — must be on PATH
 npm install
-ALLOWED_ORIGIN=https://your-site.netlify.app npm start
-```
+ALLOWED_ORIGIN=https://your-frontend-url.com npm start
 
-This starts the API on port `8080`. In production, put it behind a reverse proxy (Caddy, Nginx, or Traefik) for TLS and a real domain, then point `VITE_EXECUTION_API_URL` at `https://your-domain/`. Restrict `ALLOWED_ORIGIN` to your actual Netlify URL rather than leaving it as `*`.
+In production, place this behind a reverse proxy (Caddy, Nginx, or Traefik) for TLS and a real domain, then point VITE_EXECUTION_API_URL at that domain. Restrict ALLOWED_ORIGIN to your actual frontend URL rather than leaving it open to all origins.
 
-**Security note:** unlike the old Docker version, this runs code with no sandbox isolation — no network/CPU/memory caps, no non-root jail. That's an acceptable trade-off for a portfolio project where you trust the code being submitted (i.e. your own), but avoid exposing this open to the public internet for anonymous submissions.
+Security Model
+Code is compiled and executed directly on the execution-service host via child_process (g++, then the compiled binary) — there is no container or process-level sandbox. This is appropriate for personal or trusted use, but not suitable for accepting arbitrary code submissions from the public internet.
+Each test run is bounded by a wall-clock execution timeout (process is killed on expiry) and a compile timeout, though there are no memory, CPU, or network usage caps.
+Hidden test inputs and expected outputs are never sent to the browser — they're stripped out of the public data at build time, and the API only returns hidden-test details for non-hidden tests.
+A simple in-memory per-IP rate limiter guards the run and submit endpoints; a proper gateway or WAF is recommended for production traffic at scale.
+License
 
-## Security model
-
-- Code is compiled and run directly on the execution-service host via `child_process` (`g++`, then the compiled binary) — there is **no container or process sandbox**. This is appropriate for local/personal use where you trust the code being run; it is not appropriate for accepting submissions from the public internet.
-- Each test run is bounded by a wall-clock timeout (`SIGKILL` on expiry) and a 10s compile timeout, but has no memory/CPU/network caps.
-- Hidden test inputs/outputs are never sent to the browser — the public JSON strips them at build time, and the API only ever echoes back hidden-test input/output/stderr when `hidden: false`.
-- A simple in-memory per-IP rate limiter (20 requests/minute) guards the `/run` and `/submit` endpoints; put a real gateway/WAF in front for production traffic at scale.
-
-## License
-
-For personal/portfolio use.
+For personal and portfolio use.
