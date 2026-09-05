@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --forge-bg: #0B0D10;
+  --forge-bg-soft: #0F1215;
+  --forge-surface: #15181C;
+  --forge-surface-raised: #1C2025;
+  --forge-surface-hover: #22262C;
+  --forge-border: #272C33;
+  --forge-border-hover: #343A42;
+  --forge-text: #EDEAE3;
+  --forge-text-dim: #9BA1AB;
+  --forge-text-faint: #5F6670;
+}
+
+html.light {
+  --forge-bg: #F7F5F1;
+  --forge-bg-soft: #FBFAF8;
+  --forge-surface: #FFFFFF;
+  --forge-surface-raised: #FFFFFF;
+  --forge-surface-hover: #F0EDE7;
+  --forge-border: #E3DFD6;
+  --forge-border-hover: #D0CABC;
+  --forge-text: #1B1A17;
+  --forge-text-dim: #5C5850;
+  --forge-text-faint: #8A8578;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--forge-bg);
+  color: var(--forge-text);
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::selection {
+  background: rgba(232, 150, 60, 0.35);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--forge-border-hover);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E8963C55;
+}
+
+/* Focus visibility */
+:focus-visible {
+  outline: 2px solid #E8963C;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.font-display {
+  letter-spacing: -0.01em;
+}
+
+.bg-forge-grid-fade {
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(232,150,60,0.10), transparent),
+    linear-gradient(rgba(232,150,60,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232,150,60,0.035) 1px, transparent 1px);
+  background-size: 100% 100%, 36px 36px, 36px 36px;
+}
+
+.monaco-editor, .monaco-editor .overflow-guard {
+  border-radius: 0 !important;
+}
