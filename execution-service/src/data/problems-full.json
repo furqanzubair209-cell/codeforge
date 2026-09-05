@@ -1,0 +1,2416 @@
+{
+  "problems": [
+    {
+      "id": "arr-001",
+      "slug": "two-sum",
+      "title": "Two Sum",
+      "topic": "Arrays",
+      "difficulty": "Easy",
+      "tags": [
+        "array",
+        "hash-map"
+      ],
+      "statement": "You are given an array of integers `nums` and an integer `target`. Return the indices of the two numbers such that they add up to `target`.\n\nAssume exactly one valid answer exists, and you may not use the same element twice. Return the indices in increasing order.",
+      "inputFormat": "First line: n (size of array) and target, space separated.\nSecond line: n space-separated integers.",
+      "outputFormat": "Two space-separated indices (0-indexed), smaller index first.",
+      "constraints": [
+        "2 <= n <= 10^4",
+        "-10^9 <= nums[i] <= 10^9",
+        "Exactly one valid answer exists."
+      ],
+      "examples": [
+        {
+          "input": "4 9\n2 7 11 15",
+          "output": "0 1",
+          "explanation": "nums[0] + nums[1] = 2 + 7 = 9"
+        },
+        {
+          "input": "3 6\n3 2 4",
+          "output": "1 2",
+          "explanation": "nums[1] + nums[2] = 2 + 4 = 6"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "2 6\n3 3",
+          "output": "0 1"
+        },
+        {
+          "input": "5 -2\n-3 4 3 90 -1",
+          "output": "0 2"
+        },
+        {
+          "input": "6 0\n0 4 3 0 -1 1",
+          "output": "0 3"
+        },
+        {
+          "input": "5 100\n10 20 30 40 60",
+          "output": "1 4"
+        },
+        {
+          "input": "4 -4\n-1 -2 -3 -1",
+          "output": "1 2"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n; long long target;\n    cin >> n >> target;\n    vector<long long> nums(n);\n    for (int i = 0; i < n; i++) cin >> nums[i];\n\n    // TODO: find two indices whose values sum to target\n    // print the two indices separated by a space\n\n    return 0;\n}\n",
+      "hints": [
+        "A brute force checking every pair works but is O(n^2). Can you do better?",
+        "A hash map from value -> index lets you check 'have I seen target - nums[i] before?' in O(1).",
+        "Iterate once, and for each element check the complement before inserting the current element into the map."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "arr-002",
+      "slug": "maximum-subarray",
+      "title": "Maximum Subarray",
+      "topic": "Arrays",
+      "difficulty": "Medium",
+      "tags": [
+        "array",
+        "dynamic-programming",
+        "kadane"
+      ],
+      "statement": "Given an integer array `nums`, find the contiguous subarray (containing at least one number) which has the largest sum, and return that sum.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers (may be negative).",
+      "outputFormat": "A single integer: the maximum subarray sum.",
+      "constraints": [
+        "1 <= n <= 10^5",
+        "-10^4 <= nums[i] <= 10^4"
+      ],
+      "examples": [
+        {
+          "input": "9\n-2 1 -3 4 -1 2 1 -5 4",
+          "output": "6",
+          "explanation": "[4,-1,2,1] has the largest sum = 6."
+        },
+        {
+          "input": "1\n1",
+          "output": "1"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "5\n5 4 -1 7 8",
+          "output": "23"
+        },
+        {
+          "input": "3\n-1 -2 -3",
+          "output": "-1"
+        },
+        {
+          "input": "6\n-2 -1 -3 -4 -1 -2",
+          "output": "-1"
+        },
+        {
+          "input": "4\n0 0 0 0",
+          "output": "0"
+        },
+        {
+          "input": "7\n1 2 3 -2 5 -10 6",
+          "output": "9"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> nums(n);\n    for (int i = 0; i < n; i++) cin >> nums[i];\n\n    // TODO: implement Kadane's algorithm\n\n    return 0;\n}\n",
+      "hints": [
+        "Think about extending a running subarray sum vs starting fresh at the current element.",
+        "Kadane's algorithm: maintain `currentSum = max(nums[i], currentSum + nums[i])`.",
+        "Track a separate `best` variable updated every step, since the optimal subarray might end anywhere."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "arr-003",
+      "slug": "move-zeroes",
+      "title": "Move Zeroes",
+      "topic": "Arrays",
+      "difficulty": "Easy",
+      "tags": [
+        "array",
+        "two-pointers",
+        "in-place"
+      ],
+      "statement": "Given an integer array `nums`, move all zeroes to the end of it while maintaining the relative order of the non-zero elements. Print the resulting array.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers.",
+      "outputFormat": "n space-separated integers: the array after moving zeroes to the end.",
+      "constraints": [
+        "1 <= n <= 10^4",
+        "-2^31 <= nums[i] <= 2^31 - 1"
+      ],
+      "examples": [
+        {
+          "input": "5\n0 1 0 3 12",
+          "output": "1 3 12 0 0"
+        },
+        {
+          "input": "1\n0",
+          "output": "0"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "6\n1 2 3 4 5 6",
+          "output": "1 2 3 4 5 6"
+        },
+        {
+          "input": "4\n0 0 0 1",
+          "output": "1 0 0 0"
+        },
+        {
+          "input": "5\n-1 0 -2 0 5",
+          "output": "-1 -2 5 0 0"
+        },
+        {
+          "input": "3\n0 0 0",
+          "output": "0 0 0"
+        },
+        {
+          "input": "7\n4 0 5 0 0 9 2",
+          "output": "4 5 9 2 0 0 0"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> nums(n);\n    for (int i = 0; i < n; i++) cin >> nums[i];\n\n    // TODO: move all zeroes to the end, keep relative order of non-zeros\n\n    for (int i = 0; i < n; i++) cout << nums[i] << (i + 1 < n ? ' ' : '\\n');\n    return 0;\n}\n",
+      "hints": [
+        "Use a 'write pointer' that tracks where the next non-zero element should go.",
+        "Do a single pass copying non-zero elements forward, then fill the rest with zeroes.",
+        "This can be done in-place in O(n) time and O(1) extra space."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "arr-004",
+      "slug": "product-of-array-except-self",
+      "title": "Product of Array Except Self",
+      "topic": "Arrays",
+      "difficulty": "Medium",
+      "tags": [
+        "array",
+        "prefix-sum"
+      ],
+      "statement": "Given an integer array `nums`, return an array `answer` such that `answer[i]` is equal to the product of all the elements of `nums` except `nums[i]`. Do this without using division.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers.",
+      "outputFormat": "n space-separated integers: the answer array.",
+      "constraints": [
+        "2 <= n <= 10^5",
+        "-30 <= nums[i] <= 30",
+        "The product of any prefix or suffix fits in a 64-bit integer."
+      ],
+      "examples": [
+        {
+          "input": "4\n1 2 3 4",
+          "output": "24 12 8 6"
+        },
+        {
+          "input": "5\n-1 1 0 -3 3",
+          "output": "0 0 9 0 0"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "2\n3 5",
+          "output": "5 3"
+        },
+        {
+          "input": "3\n0 0 5",
+          "output": "0 0 0"
+        },
+        {
+          "input": "4\n-1 -2 -3 -4",
+          "output": "-24 -12 -8 -6"
+        },
+        {
+          "input": "5\n1 1 1 1 1",
+          "output": "1 1 1 1 1"
+        },
+        {
+          "input": "3\n2 3 4",
+          "output": "12 8 6"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> nums(n);\n    for (int i = 0; i < n; i++) cin >> nums[i];\n\n    vector<long long> answer(n, 1);\n    // TODO: fill answer[i] with product of all elements except nums[i], no division\n\n    for (int i = 0; i < n; i++) cout << answer[i] << (i + 1 < n ? ' ' : '\\n');\n    return 0;\n}\n",
+      "hints": [
+        "Compute prefix products (product of everything to the left) in one pass.",
+        "Compute suffix products (product of everything to the right) in a second pass.",
+        "answer[i] = prefix[i] * suffix[i]. You can do this with O(1) extra space beyond the output array."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "arr-005",
+      "slug": "trapping-rain-water",
+      "title": "Trapping Rain Water",
+      "topic": "Arrays",
+      "difficulty": "Hard",
+      "tags": [
+        "array",
+        "two-pointers",
+        "stack"
+      ],
+      "statement": "Given `n` non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated non-negative integers (bar heights).",
+      "outputFormat": "A single integer: total units of trapped water.",
+      "constraints": [
+        "1 <= n <= 2*10^4",
+        "0 <= height[i] <= 10^5"
+      ],
+      "examples": [
+        {
+          "input": "12\n0 1 0 2 1 0 1 3 2 1 2 1",
+          "output": "6"
+        },
+        {
+          "input": "6\n4 2 0 3 2 5",
+          "output": "9"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n5",
+          "output": "0"
+        },
+        {
+          "input": "3\n3 3 3",
+          "output": "0"
+        },
+        {
+          "input": "5\n5 4 3 2 1",
+          "output": "0"
+        },
+        {
+          "input": "5\n1 2 3 4 5",
+          "output": "0"
+        },
+        {
+          "input": "7\n0 0 0 5 0 0 0",
+          "output": "0"
+        },
+        {
+          "input": "8\n4 2 3 1 5 0 2 3",
+          "output": "12"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> h(n);\n    for (int i = 0; i < n; i++) cin >> h[i];\n\n    // TODO: compute total trapped water using two pointers or prefix max/suffix max\n\n    return 0;\n}\n",
+      "hints": [
+        "Water trapped above index i is min(maxLeft[i], maxRight[i]) - height[i], if positive.",
+        "Precompute maxLeft and maxRight arrays in O(n), or use a two-pointer approach for O(1) extra space.",
+        "With two pointers, move the side with the smaller current max inward, since that side's bound is already known."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "ll-001",
+      "slug": "reverse-linked-list",
+      "title": "Reverse a Linked List",
+      "topic": "Linked List",
+      "difficulty": "Easy",
+      "tags": [
+        "linked-list",
+        "pointers"
+      ],
+      "statement": "Given the values of a singly linked list, build the list and reverse it. Print the reversed list's values in order.",
+      "inputFormat": "First line: n (number of nodes).\nSecond line: n space-separated integers, the list values in order.",
+      "outputFormat": "n space-separated integers: the reversed list.",
+      "constraints": [
+        "0 <= n <= 5000",
+        "-10^5 <= value <= 10^5"
+      ],
+      "examples": [
+        {
+          "input": "5\n1 2 3 4 5",
+          "output": "5 4 3 2 1"
+        },
+        {
+          "input": "2\n1 2",
+          "output": "2 1"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "0\n",
+          "output": ""
+        },
+        {
+          "input": "1\n7",
+          "output": "7"
+        },
+        {
+          "input": "3\n-1 0 1",
+          "output": "1 0 -1"
+        },
+        {
+          "input": "6\n10 20 30 40 50 60",
+          "output": "60 50 40 30 20 10"
+        },
+        {
+          "input": "4\n5 5 5 5",
+          "output": "5 5 5 5"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node* next;\n    Node(int v) : val(v), next(nullptr) {}\n};\n\nint main() {\n    int n;\n    cin >> n;\n    Node* head = nullptr;\n    Node* tail = nullptr;\n    for (int i = 0; i < n; i++) {\n        int v; cin >> v;\n        Node* node = new Node(v);\n        if (!head) head = tail = node;\n        else { tail->next = node; tail = node; }\n    }\n\n    // TODO: reverse the linked list starting at head\n\n    vector<int> out;\n    for (Node* cur = head; cur; cur = cur->next) out.push_back(cur->val);\n    for (size_t i = 0; i < out.size(); i++) cout << out[i] << (i + 1 < out.size() ? ' ' : '\\n');\n    return 0;\n}\n",
+      "hints": [
+        "Track three pointers: prev, current, and next, iterating through the list.",
+        "At each node, save next, point current->next to prev, then advance prev and current.",
+        "After the loop, prev is the new head."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "ll-002",
+      "slug": "detect-cycle-linked-list",
+      "title": "Detect Cycle in a Linked List",
+      "topic": "Linked List",
+      "difficulty": "Medium",
+      "tags": [
+        "linked-list",
+        "two-pointers",
+        "floyd-cycle"
+      ],
+      "statement": "Given a linked list built from `n` values, and an integer `pos` indicating the index (0-indexed) that the tail connects back to (or -1 for no cycle), determine whether the list has a cycle.",
+      "inputFormat": "First line: n and pos, space separated.\nSecond line: n space-separated integers, the list values.",
+      "outputFormat": "Print \"true\" if a cycle exists, otherwise \"false\".",
+      "constraints": [
+        "1 <= n <= 10^4",
+        "-1 <= pos < n"
+      ],
+      "examples": [
+        {
+          "input": "3 1\n3 2 0",
+          "output": "true",
+          "explanation": "The tail connects back to index 1, forming a cycle."
+        },
+        {
+          "input": "1 -1\n1",
+          "output": "false"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "2 0\n1 2",
+          "output": "true"
+        },
+        {
+          "input": "4 -1\n1 2 3 4",
+          "output": "false"
+        },
+        {
+          "input": "5 4\n1 2 3 4 5",
+          "output": "true"
+        },
+        {
+          "input": "2 -1\n1 2",
+          "output": "false"
+        },
+        {
+          "input": "6 2\n5 4 3 2 1 0",
+          "output": "true"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node* next;\n    Node(int v) : val(v), next(nullptr) {}\n};\n\nint main() {\n    int n, pos;\n    cin >> n >> pos;\n    vector<Node*> nodes(n);\n    for (int i = 0; i < n; i++) {\n        int v; cin >> v;\n        nodes[i] = new Node(v);\n    }\n    for (int i = 0; i + 1 < n; i++) nodes[i]->next = nodes[i + 1];\n    if (pos >= 0) nodes[n - 1]->next = nodes[pos];\n\n    Node* head = nodes[0];\n    // TODO: use Floyd's cycle detection (slow/fast pointers) to determine if a cycle exists\n    // print \"true\" or \"false\"\n\n    return 0;\n}\n",
+      "hints": [
+        "Floyd's algorithm: a slow pointer moves 1 step, a fast pointer moves 2 steps.",
+        "If there's a cycle, the fast pointer will eventually catch up to the slow pointer.",
+        "If the fast pointer reaches nullptr, there is no cycle."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "ll-003",
+      "slug": "merge-two-sorted-lists",
+      "title": "Merge Two Sorted Lists",
+      "topic": "Linked List",
+      "difficulty": "Easy",
+      "tags": [
+        "linked-list",
+        "merge"
+      ],
+      "statement": "You are given two linked lists, each sorted in non-decreasing order. Merge them into one sorted list and print its values.",
+      "inputFormat": "First line: n1 and n2, the sizes of the two lists.\nSecond line: n1 integers (list 1, sorted).\nThird line: n2 integers (list 2, sorted).",
+      "outputFormat": "The merged, sorted list values, space separated.",
+      "constraints": [
+        "0 <= n1, n2 <= 5000",
+        "-10^5 <= value <= 10^5"
+      ],
+      "examples": [
+        {
+          "input": "3 3\n1 2 4\n1 3 4",
+          "output": "1 1 2 3 4 4"
+        },
+        {
+          "input": "0 1\n\n0",
+          "output": "0"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "0 0\n\n",
+          "output": ""
+        },
+        {
+          "input": "2 0\n5 7\n",
+          "output": "5 7"
+        },
+        {
+          "input": "1 1\n-3\n-3",
+          "output": "-3 -3"
+        },
+        {
+          "input": "4 2\n1 3 5 7\n2 4",
+          "output": "1 2 3 4 5 7"
+        },
+        {
+          "input": "3 3\n-5 0 5\n-10 0 10",
+          "output": "-10 -5 0 0 5 10"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n1, n2;\n    cin >> n1 >> n2;\n    vector<long long> a(n1), b(n2);\n    for (int i = 0; i < n1; i++) cin >> a[i];\n    for (int i = 0; i < n2; i++) cin >> b[i];\n\n    vector<long long> merged;\n    // TODO: merge a and b (both already sorted) into `merged`\n\n    for (size_t i = 0; i < merged.size(); i++) cout << merged[i] << (i + 1 < merged.size() ? ' ' : '\\n');\n    return 0;\n}\n",
+      "hints": [
+        "Use two pointers, one for each list, and always take the smaller of the two current elements.",
+        "When one list is exhausted, append the rest of the other list directly.",
+        "This models the merge step of merge sort applied to linked lists."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "ll-004",
+      "slug": "remove-nth-node-from-end",
+      "title": "Remove Nth Node From End of List",
+      "topic": "Linked List",
+      "difficulty": "Medium",
+      "tags": [
+        "linked-list",
+        "two-pointers"
+      ],
+      "statement": "Given a linked list, remove the `n`-th node from the end of the list (1-indexed from the end) and print the resulting list.",
+      "inputFormat": "First line: m (list size) and n.\nSecond line: m space-separated integers.",
+      "outputFormat": "The resulting list's values, space separated (empty line if the list becomes empty).",
+      "constraints": [
+        "1 <= m <= 5000",
+        "1 <= n <= m"
+      ],
+      "examples": [
+        {
+          "input": "5 2\n1 2 3 4 5",
+          "output": "1 2 3 5"
+        },
+        {
+          "input": "1 1\n1",
+          "output": ""
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "2 1\n1 2",
+          "output": "1"
+        },
+        {
+          "input": "2 2\n1 2",
+          "output": "2"
+        },
+        {
+          "input": "6 6\n1 2 3 4 5 6",
+          "output": "2 3 4 5 6"
+        },
+        {
+          "input": "4 3\n10 20 30 40",
+          "output": "10 30 40"
+        },
+        {
+          "input": "3 1\n7 8 9",
+          "output": "7 8"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node* next;\n    Node(int v) : val(v), next(nullptr) {}\n};\n\nint main() {\n    int m, n;\n    cin >> m >> n;\n    Node* head = nullptr; Node* tail = nullptr;\n    for (int i = 0; i < m; i++) {\n        int v; cin >> v;\n        Node* node = new Node(v);\n        if (!head) head = tail = node; else { tail->next = node; tail = node; }\n    }\n\n    // TODO: remove the n-th node from the end using a two-pointer gap technique\n    // hint: use a dummy head to simplify removing the actual head node\n\n    vector<int> out;\n    for (Node* cur = head; cur; cur = cur->next) out.push_back(cur->val);\n    for (size_t i = 0; i < out.size(); i++) cout << out[i] << (i + 1 < out.size() ? ' ' : \"\");\n    cout << \"\\n\";\n    return 0;\n}\n",
+      "hints": [
+        "Use a dummy node pointing to head so removing the actual head is not a special case.",
+        "Advance a 'fast' pointer n steps ahead of a 'slow' pointer, then move both until fast reaches the end.",
+        "Slow will now be right before the node to remove."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "ll-005",
+      "slug": "palindrome-linked-list",
+      "title": "Palindrome Linked List",
+      "topic": "Linked List",
+      "difficulty": "Medium",
+      "tags": [
+        "linked-list",
+        "two-pointers",
+        "reversal"
+      ],
+      "statement": "Given a singly linked list, determine whether it is a palindrome (reads the same forward and backward).",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers.",
+      "outputFormat": "Print \"true\" or \"false\".",
+      "constraints": [
+        "1 <= n <= 5*10^4",
+        "0 <= value <= 9"
+      ],
+      "examples": [
+        {
+          "input": "4\n1 2 2 1",
+          "output": "true"
+        },
+        {
+          "input": "3\n1 2 3",
+          "output": "false"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n5",
+          "output": "true"
+        },
+        {
+          "input": "2\n1 1",
+          "output": "true"
+        },
+        {
+          "input": "2\n1 2",
+          "output": "false"
+        },
+        {
+          "input": "5\n1 2 3 2 1",
+          "output": "true"
+        },
+        {
+          "input": "6\n1 2 3 3 2 0",
+          "output": "false"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<int> vals(n);\n    for (int i = 0; i < n; i++) cin >> vals[i];\n\n    // TODO: determine if vals reads the same forwards and backwards\n    // (in a real linked-list solution you'd find the middle, reverse the second half, and compare)\n\n    return 0;\n}\n",
+      "hints": [
+        "Find the middle of the list using slow/fast pointers.",
+        "Reverse the second half of the list in place.",
+        "Compare the first half and reversed second half node by node."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "stk-001",
+      "slug": "valid-parentheses",
+      "title": "Valid Parentheses",
+      "topic": "Stack",
+      "difficulty": "Easy",
+      "tags": [
+        "stack",
+        "string"
+      ],
+      "statement": "Given a string containing just the characters `(`, `)`, `{`, `}`, `[`, `]`, determine if the input string is valid. Brackets must close in the correct order.",
+      "inputFormat": "A single line containing the string.",
+      "outputFormat": "Print \"true\" or \"false\".",
+      "constraints": [
+        "1 <= length <= 10^4"
+      ],
+      "examples": [
+        {
+          "input": "()[]{}",
+          "output": "true"
+        },
+        {
+          "input": "(]",
+          "output": "false"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "([{}])",
+          "output": "true"
+        },
+        {
+          "input": "(",
+          "output": "false"
+        },
+        {
+          "input": "]",
+          "output": "false"
+        },
+        {
+          "input": "{[()]}",
+          "output": "true"
+        },
+        {
+          "input": "([)]",
+          "output": "false"
+        },
+        {
+          "input": "((((",
+          "output": "false"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n\n    // TODO: use a stack to check if brackets are balanced and correctly nested\n\n    return 0;\n}\n",
+      "hints": [
+        "Push opening brackets onto a stack.",
+        "On a closing bracket, check the top of the stack matches the corresponding opener, then pop.",
+        "The string is valid only if the stack is empty at the end."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "stk-002",
+      "slug": "min-stack",
+      "title": "Min Stack",
+      "topic": "Stack",
+      "difficulty": "Medium",
+      "tags": [
+        "stack",
+        "design"
+      ],
+      "statement": "Design a stack that supports push, pop, top, and retrieving the minimum element, all in O(1) time. You'll process a sequence of operations from stdin.",
+      "inputFormat": "First line: q (number of operations).\nEach of the next q lines is one of:\n`PUSH x`, `POP`, `TOP`, `GETMIN`.",
+      "outputFormat": "For each TOP or GETMIN operation, print the result on its own line.",
+      "constraints": [
+        "1 <= q <= 10^4",
+        "Operations are always valid (no POP/TOP/GETMIN on an empty stack)."
+      ],
+      "examples": [
+        {
+          "input": "6\nPUSH -2\nPUSH 0\nPUSH -3\nGETMIN\nPOP\nGETMIN",
+          "output": "-3\n-2"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "4\nPUSH 5\nTOP\nGETMIN\nPOP",
+          "output": "5\n5"
+        },
+        {
+          "input": "5\nPUSH 3\nPUSH 1\nPUSH 2\nGETMIN\nTOP",
+          "output": "1\n2"
+        },
+        {
+          "input": "7\nPUSH 10\nPUSH 5\nPUSH 20\nGETMIN\nPOP\nPOP\nGETMIN",
+          "output": "5\n10"
+        },
+        {
+          "input": "3\nPUSH -1\nGETMIN\nTOP",
+          "output": "-1\n-1"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int q;\n    cin >> q;\n    // TODO: maintain a main stack plus an auxiliary structure to track the minimum in O(1)\n    for (int i = 0; i < q; i++) {\n        string op;\n        cin >> op;\n        if (op == \"PUSH\") {\n            long long x; cin >> x;\n            // handle push\n        } else if (op == \"POP\") {\n            // handle pop\n        } else if (op == \"TOP\") {\n            // print top\n        } else if (op == \"GETMIN\") {\n            // print current minimum\n        }\n    }\n    return 0;\n}\n",
+      "hints": [
+        "Keep a second stack that tracks the minimum value at each point in time.",
+        "When pushing x, also push min(x, currentMin) onto the min-stack.",
+        "When popping, pop from both stacks together so they stay in sync."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "stk-003",
+      "slug": "next-greater-element",
+      "title": "Next Greater Element",
+      "topic": "Stack",
+      "difficulty": "Medium",
+      "tags": [
+        "stack",
+        "monotonic-stack"
+      ],
+      "statement": "Given an array `nums`, for each element find the next element to its right that is strictly greater. If none exists, use -1.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers.",
+      "outputFormat": "n space-separated integers: the next greater element for each position.",
+      "constraints": [
+        "1 <= n <= 10^5",
+        "-10^9 <= nums[i] <= 10^9"
+      ],
+      "examples": [
+        {
+          "input": "4\n2 1 2 4",
+          "output": "4 2 4 -1"
+        },
+        {
+          "input": "3\n1 2 3",
+          "output": "2 3 -1"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n5",
+          "output": "-1"
+        },
+        {
+          "input": "4\n4 3 2 1",
+          "output": "-1 -1 -1 -1"
+        },
+        {
+          "input": "5\n1 3 2 4 1",
+          "output": "3 4 4 -1 -1"
+        },
+        {
+          "input": "6\n5 4 3 2 1 6",
+          "output": "6 6 6 6 6 -1"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> nums(n);\n    for (int i = 0; i < n; i++) cin >> nums[i];\n\n    vector<long long> result(n, -1);\n    // TODO: use a monotonic decreasing stack of indices to find next greater elements\n\n    for (int i = 0; i < n; i++) cout << result[i] << (i + 1 < n ? ' ' : '\\n');\n    return 0;\n}\n",
+      "hints": [
+        "Traverse from right to left (or left to right with a stack of pending indices).",
+        "Maintain a stack of indices whose next-greater element hasn't been found yet.",
+        "Pop from the stack while its top value is <= the current element, since the current element is their answer."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "stk-004",
+      "slug": "evaluate-postfix-expression",
+      "title": "Evaluate Postfix Expression",
+      "topic": "Stack",
+      "difficulty": "Medium",
+      "tags": [
+        "stack",
+        "expression-evaluation"
+      ],
+      "statement": "Evaluate an arithmetic expression given in postfix (Reverse Polish) notation. Tokens are space separated: integers and the operators `+ - * /`. Division truncates toward zero.",
+      "inputFormat": "A single line: the space-separated postfix expression.",
+      "outputFormat": "A single integer: the evaluated result.",
+      "constraints": [
+        "The expression is always valid.",
+        "1 <= number of tokens <= 10^4"
+      ],
+      "examples": [
+        {
+          "input": "2 1 + 3 *",
+          "output": "9"
+        },
+        {
+          "input": "4 13 5 / +",
+          "output": "6"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "5 1 2 + 4 * + 3 -",
+          "output": "14"
+        },
+        {
+          "input": "10 2 /",
+          "output": "5"
+        },
+        {
+          "input": "3 4 +",
+          "output": "7"
+        },
+        {
+          "input": "6 2 -",
+          "output": "4"
+        },
+        {
+          "input": "7 2 *",
+          "output": "14"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    string line;\n    getline(cin, line);\n    istringstream iss(line);\n    string tok;\n\n    // TODO: use a stack; push numbers, and on an operator pop two operands, apply it, push result\n\n    return 0;\n}\n",
+      "hints": [
+        "Split the line by spaces into tokens.",
+        "If a token is a number, push it. If it's an operator, pop two values (b then a), compute a OP b, and push the result.",
+        "The final answer is the single value left on the stack."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "stk-005",
+      "slug": "largest-rectangle-in-histogram",
+      "title": "Largest Rectangle in Histogram",
+      "topic": "Stack",
+      "difficulty": "Hard",
+      "tags": [
+        "stack",
+        "monotonic-stack"
+      ],
+      "statement": "Given an array of bar heights of a histogram (each bar has width 1), find the area of the largest rectangle that can be formed within the histogram.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated non-negative integers.",
+      "outputFormat": "A single integer: the maximum rectangular area.",
+      "constraints": [
+        "1 <= n <= 10^5",
+        "0 <= height[i] <= 10^4"
+      ],
+      "examples": [
+        {
+          "input": "6\n2 1 5 6 2 3",
+          "output": "10"
+        },
+        {
+          "input": "2\n2 4",
+          "output": "4"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n5",
+          "output": "5"
+        },
+        {
+          "input": "3\n2 2 2",
+          "output": "6"
+        },
+        {
+          "input": "5\n1 1 1 1 1",
+          "output": "5"
+        },
+        {
+          "input": "4\n4 2 0 3",
+          "output": "4"
+        },
+        {
+          "input": "7\n6 2 5 4 5 1 6",
+          "output": "12"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> h(n);\n    for (int i = 0; i < n; i++) cin >> h[i];\n\n    // TODO: use a monotonic increasing stack of indices to find the largest rectangle\n\n    return 0;\n}\n",
+      "hints": [
+        "For each bar, find how far it can extend left and right while remaining the shortest bar in that span.",
+        "A monotonic increasing stack of indices lets you compute this in a single pass.",
+        "When you pop an index because the current bar is shorter, the popped bar's rectangle width is (currentIndex - stack.top() - 1)."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "q-001",
+      "slug": "implement-queue-using-stacks",
+      "title": "Implement Queue using Stacks",
+      "topic": "Queue",
+      "difficulty": "Easy",
+      "tags": [
+        "queue",
+        "stack",
+        "design"
+      ],
+      "statement": "Implement a FIFO queue using only stack operations, processing a stream of operations from stdin.",
+      "inputFormat": "First line: q.\nEach next line is `PUSH x` or `POP`.",
+      "outputFormat": "For each POP, print the removed value on its own line.",
+      "constraints": [
+        "1 <= q <= 10^4",
+        "POP is never called on an empty queue."
+      ],
+      "examples": [
+        {
+          "input": "5\nPUSH 1\nPUSH 2\nPOP\nPUSH 3\nPOP",
+          "output": "1\n2"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "3\nPUSH 5\nPUSH 6\nPOP",
+          "output": "5"
+        },
+        {
+          "input": "6\nPUSH 1\nPUSH 2\nPUSH 3\nPOP\nPOP\nPOP",
+          "output": "1\n2\n3"
+        },
+        {
+          "input": "4\nPUSH 9\nPOP\nPUSH 8\nPOP",
+          "output": "9\n8"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int q;\n    cin >> q;\n    // TODO: use two stacks (an 'in' stack and an 'out' stack) to simulate FIFO order\n    for (int i = 0; i < q; i++) {\n        string op; cin >> op;\n        if (op == \"PUSH\") {\n            long long x; cin >> x;\n            // push x\n        } else {\n            // pop and print the front of the queue\n        }\n    }\n    return 0;\n}\n",
+      "hints": [
+        "Keep two stacks: one for incoming pushes, one for outgoing pops.",
+        "On POP, if the 'out' stack is empty, dump everything from 'in' into 'out' (this reverses the order).",
+        "Then pop from 'out'. This gives amortized O(1) per operation."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "q-002",
+      "slug": "circular-queue",
+      "title": "Design Circular Queue",
+      "topic": "Queue",
+      "difficulty": "Medium",
+      "tags": [
+        "queue",
+        "design",
+        "array"
+      ],
+      "statement": "Implement a fixed-capacity circular queue supporting enqueue, dequeue, and front, processing operations from stdin.",
+      "inputFormat": "First line: capacity k and q (number of operations).\nEach next line is `ENQUEUE x`, `DEQUEUE`, or `FRONT`.",
+      "outputFormat": "For ENQUEUE and DEQUEUE, print \"true\" if it succeeded or \"false\" if the queue was full/empty. For FRONT, print the front value or -1 if empty.",
+      "constraints": [
+        "1 <= k <= 1000",
+        "1 <= q <= 10^4"
+      ],
+      "examples": [
+        {
+          "input": "3 5\nENQUEUE 1\nENQUEUE 2\nENQUEUE 3\nENQUEUE 4\nFRONT",
+          "output": "true\ntrue\ntrue\nfalse\n1"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "2 4\nENQUEUE 5\nDEQUEUE\nDEQUEUE\nFRONT",
+          "output": "true\ntrue\nfalse\n-1"
+        },
+        {
+          "input": "1 3\nENQUEUE 9\nENQUEUE 8\nFRONT",
+          "output": "true\nfalse\n9"
+        },
+        {
+          "input": "3 6\nENQUEUE 1\nENQUEUE 2\nDEQUEUE\nENQUEUE 3\nENQUEUE 4\nFRONT",
+          "output": "true\ntrue\ntrue\ntrue\ntrue\n2"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int k, q;\n    cin >> k >> q;\n    vector<long long> buf(k);\n    int head = 0, count = 0;\n    // TODO: implement ENQUEUE, DEQUEUE, FRONT using head/count and modular arithmetic\n    for (int i = 0; i < q; i++) {\n        string op; cin >> op;\n        if (op == \"ENQUEUE\") {\n            long long x; cin >> x;\n        } else if (op == \"DEQUEUE\") {\n        } else if (op == \"FRONT\") {\n        }\n    }\n    return 0;\n}\n",
+      "hints": [
+        "Track `head` index and current `count` of elements; capacity is fixed at k.",
+        "Enqueue writes to index (head + count) % k, if count < k.",
+        "Dequeue advances head by 1 (mod k) and decrements count, if count > 0."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "q-003",
+      "slug": "first-negative-in-window",
+      "title": "First Negative Number in Every Window of Size K",
+      "topic": "Queue",
+      "difficulty": "Medium",
+      "tags": [
+        "queue",
+        "sliding-window",
+        "deque"
+      ],
+      "statement": "Given an array and a window size `k`, find the first negative number in every contiguous window of size `k`. If a window has no negative number, print 0 for that window.",
+      "inputFormat": "First line: n and k.\nSecond line: n space-separated integers.",
+      "outputFormat": "(n - k + 1) space-separated integers, one per window.",
+      "constraints": [
+        "1 <= k <= n <= 10^5"
+      ],
+      "examples": [
+        {
+          "input": "8 3\n12 -1 -7 8 -15 30 16 28",
+          "output": "-1 -1 -7 -15 -15 0"
+        },
+        {
+          "input": "5 2\n-8 2 3 -6 10",
+          "output": "-8 0 -6 -6"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "4 4\n1 2 3 4",
+          "output": "0"
+        },
+        {
+          "input": "3 1\n-1 -2 -3",
+          "output": "-1 -2 -3"
+        },
+        {
+          "input": "6 2\n1 2 3 4 5 6",
+          "output": "0 0 0 0 0"
+        },
+        {
+          "input": "5 3\n-1 -1 -1 -1 -1",
+          "output": "-1 -1 -1"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n, k;\n    cin >> n >> k;\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    // TODO: use a deque storing indices of negative numbers to answer each window in O(1) amortized\n\n    return 0;\n}\n",
+      "hints": [
+        "Maintain a deque of indices of negative numbers seen so far, in order.",
+        "Before reading each window's answer, pop indices from the front that have fallen out of the window.",
+        "The front of the deque (if any) is the first negative number in the current window."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "q-004",
+      "slug": "sliding-window-maximum",
+      "title": "Sliding Window Maximum",
+      "topic": "Queue",
+      "difficulty": "Hard",
+      "tags": [
+        "queue",
+        "deque",
+        "sliding-window"
+      ],
+      "statement": "Given an array `nums` and window size `k`, return the maximum value in every contiguous window of size `k`.",
+      "inputFormat": "First line: n and k.\nSecond line: n space-separated integers.",
+      "outputFormat": "(n - k + 1) space-separated integers: the max of each window.",
+      "constraints": [
+        "1 <= k <= n <= 10^5",
+        "-10^4 <= nums[i] <= 10^4"
+      ],
+      "examples": [
+        {
+          "input": "8 3\n1 3 -1 -3 5 3 6 7",
+          "output": "3 3 5 5 6 7"
+        },
+        {
+          "input": "1 1\n1",
+          "output": "1"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "4 2\n9 11 8 5",
+          "output": "11 11 8"
+        },
+        {
+          "input": "5 5\n1 2 3 4 5",
+          "output": "5"
+        },
+        {
+          "input": "6 1\n4 3 2 1 5 6",
+          "output": "4 3 2 1 5 6"
+        },
+        {
+          "input": "6 3\n-1 -2 -3 -4 -5 -6",
+          "output": "-1 -2 -3 -4"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n, k;\n    cin >> n >> k;\n    vector<long long> nums(n);\n    for (int i = 0; i < n; i++) cin >> nums[i];\n\n    // TODO: use a monotonic decreasing deque of indices to get each window's max in O(n) total\n\n    return 0;\n}\n",
+      "hints": [
+        "Maintain a deque of indices whose corresponding values are in decreasing order.",
+        "Before adding a new index, pop from the back while its value is <= the new value.",
+        "Pop from the front if it has fallen outside the current window; the front is always the current max."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "q-005",
+      "slug": "generate-binary-numbers",
+      "title": "Generate Binary Numbers from 1 to N",
+      "topic": "Queue",
+      "difficulty": "Easy",
+      "tags": [
+        "queue",
+        "bfs-style-generation"
+      ],
+      "statement": "Using a queue, generate the binary representations of all integers from 1 to `n`, in order.",
+      "inputFormat": "A single integer n.",
+      "outputFormat": "n lines, each the binary representation of 1, 2, ..., n in order.",
+      "constraints": [
+        "1 <= n <= 1000"
+      ],
+      "examples": [
+        {
+          "input": "5",
+          "output": "1\n10\n11\n100\n101"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1",
+          "output": "1"
+        },
+        {
+          "input": "3",
+          "output": "1\n10\n11"
+        },
+        {
+          "input": "8",
+          "output": "1\n10\n11\n100\n101\n110\n111\n1000"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n\n    // TODO: use a queue of strings, starting with \"1\", generating each next number\n    // by appending \"0\" and \"1\" to the front of the queue\n\n    return 0;\n}\n",
+      "hints": [
+        "Start a queue with the string \"1\".",
+        "To get the next number, dequeue the front, print it, then enqueue front+\"0\" and front+\"1\".",
+        "Repeat this n times."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "sr-001",
+      "slug": "binary-search",
+      "title": "Binary Search",
+      "topic": "Searching",
+      "difficulty": "Easy",
+      "tags": [
+        "searching",
+        "binary-search"
+      ],
+      "statement": "Given a sorted array of distinct integers and a target value, return the index of the target, or -1 if it is not present.",
+      "inputFormat": "First line: n and target.\nSecond line: n space-separated sorted integers.",
+      "outputFormat": "A single integer: the index of target, or -1.",
+      "constraints": [
+        "1 <= n <= 10^5",
+        "Array is sorted in strictly increasing order."
+      ],
+      "examples": [
+        {
+          "input": "6 9\n-1 0 3 5 9 12",
+          "output": "4"
+        },
+        {
+          "input": "6 2\n-1 0 3 5 9 12",
+          "output": "-1"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1 5\n5",
+          "output": "0"
+        },
+        {
+          "input": "1 3\n5",
+          "output": "-1"
+        },
+        {
+          "input": "5 1\n1 2 3 4 5",
+          "output": "0"
+        },
+        {
+          "input": "5 5\n1 2 3 4 5",
+          "output": "4"
+        },
+        {
+          "input": "7 50\n10 20 30 40 50 60 70",
+          "output": "4"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n; long long target;\n    cin >> n >> target;\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    // TODO: implement iterative binary search, print the index or -1\n\n    return 0;\n}\n",
+      "hints": [
+        "Maintain lo = 0 and hi = n - 1, compute mid = lo + (hi - lo) / 2.",
+        "If a[mid] == target, return mid. If a[mid] < target, search the right half, else the left half.",
+        "Stop when lo > hi and return -1."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "sr-002",
+      "slug": "search-rotated-sorted-array",
+      "title": "Search in Rotated Sorted Array",
+      "topic": "Searching",
+      "difficulty": "Medium",
+      "tags": [
+        "searching",
+        "binary-search"
+      ],
+      "statement": "An array sorted in ascending order was rotated at an unknown pivot. Given the rotated array and a target, return its index, or -1 if absent. Must run in O(log n).",
+      "inputFormat": "First line: n and target.\nSecond line: n space-separated integers (distinct values).",
+      "outputFormat": "A single integer: the index of target, or -1.",
+      "constraints": [
+        "1 <= n <= 5*10^4",
+        "All values are distinct."
+      ],
+      "examples": [
+        {
+          "input": "7 0\n4 5 6 7 0 1 2",
+          "output": "4"
+        },
+        {
+          "input": "7 3\n4 5 6 7 0 1 2",
+          "output": "-1"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1 5\n5",
+          "output": "0"
+        },
+        {
+          "input": "5 4\n4 5 6 7 8",
+          "output": "0"
+        },
+        {
+          "input": "5 8\n4 5 6 7 8",
+          "output": "4"
+        },
+        {
+          "input": "6 1\n6 7 1 2 3 4",
+          "output": "2"
+        },
+        {
+          "input": "4 2\n3 1 2 2",
+          "output": "-1"
+        },
+        {
+          "input": "6 9\n11 13 15 17 2 5",
+          "output": "-1"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n; long long target;\n    cin >> n >> target;\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    // TODO: modified binary search: at each step, determine which half is sorted\n    // and check whether target lies in that half's range\n\n    return 0;\n}\n",
+      "hints": [
+        "At each step, one half of [lo, mid] or [mid, hi] is guaranteed to be normally sorted.",
+        "Check which half is sorted by comparing a[lo] and a[mid].",
+        "If the target lies within the sorted half's range, recurse there; otherwise recurse the other half."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "sr-003",
+      "slug": "first-last-position",
+      "title": "Find First and Last Position of Element in Sorted Array",
+      "topic": "Searching",
+      "difficulty": "Medium",
+      "tags": [
+        "searching",
+        "binary-search"
+      ],
+      "statement": "Given a sorted array and a target value, find the first and last index at which target appears. If it does not appear, return -1 -1.",
+      "inputFormat": "First line: n and target.\nSecond line: n space-separated sorted integers.",
+      "outputFormat": "Two space-separated integers: first index, last index (or -1 -1).",
+      "constraints": [
+        "0 <= n <= 10^5"
+      ],
+      "examples": [
+        {
+          "input": "6 8\n5 7 7 8 8 10",
+          "output": "3 4"
+        },
+        {
+          "input": "6 6\n5 7 7 8 8 10",
+          "output": "-1 -1"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "0 5\n",
+          "output": "-1 -1"
+        },
+        {
+          "input": "1 5\n5",
+          "output": "0 0"
+        },
+        {
+          "input": "5 2\n2 2 2 2 2",
+          "output": "0 4"
+        },
+        {
+          "input": "6 1\n1 2 3 4 5 6",
+          "output": "0 0"
+        },
+        {
+          "input": "6 6\n1 2 3 4 5 6",
+          "output": "5 5"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n; long long target;\n    cin >> n >> target;\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    // TODO: binary search for the leftmost occurrence, then binary search for the rightmost\n\n    return 0;\n}\n",
+      "hints": [
+        "Write a helper binary search that finds the leftmost index where a[i] >= target.",
+        "A similar search variant (leftmost index where a[i] > target, minus 1) gives the rightmost occurrence.",
+        "If the leftmost index found doesn't actually equal target, the answer is -1 -1."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "sr-004",
+      "slug": "find-peak-element",
+      "title": "Find Peak Element",
+      "topic": "Searching",
+      "difficulty": "Medium",
+      "tags": [
+        "searching",
+        "binary-search"
+      ],
+      "statement": "A peak element is one strictly greater than its neighbors (treat out-of-bounds neighbors as negative infinity). Given an array, find the index of any one peak. Must run in O(log n).",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers (adjacent elements are never equal).",
+      "outputFormat": "A single integer: the index of a valid peak.",
+      "constraints": [
+        "1 <= n <= 10^5"
+      ],
+      "examples": [
+        {
+          "input": "4\n1 2 3 1",
+          "output": "2"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n1",
+          "output": "0"
+        },
+        {
+          "input": "2\n1 2",
+          "output": "1"
+        },
+        {
+          "input": "2\n2 1",
+          "output": "0"
+        },
+        {
+          "input": "5\n1 2 1 3 5",
+          "output": "1 3",
+          "explanation": "multiple valid answers; grader accepts index 1 or 3"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    // TODO: binary search: move toward the side with the larger neighbor\n\n    return 0;\n}\n",
+      "hints": [
+        "Compare a[mid] with a[mid + 1]. If a[mid] < a[mid+1], a peak exists to the right.",
+        "Otherwise, a peak exists at mid or to its left.",
+        "This converges in O(log n) because you always move toward increasing values."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "sr-005",
+      "slug": "median-of-two-sorted-arrays",
+      "title": "Median of Two Sorted Arrays",
+      "topic": "Searching",
+      "difficulty": "Hard",
+      "tags": [
+        "searching",
+        "binary-search",
+        "divide-and-conquer"
+      ],
+      "statement": "Given two sorted arrays, find the median of the combined array. Must run in O(log(min(n, m))) time. Print the median with exactly 1 decimal place.",
+      "inputFormat": "First line: n and m.\nSecond line: n space-separated integers.\nThird line: m space-separated integers.",
+      "outputFormat": "The median as a decimal number with exactly 1 decimal place.",
+      "constraints": [
+        "0 <= n, m <= 10^5",
+        "1 <= n + m"
+      ],
+      "examples": [
+        {
+          "input": "2 1\n1 3\n2",
+          "output": "2.0"
+        },
+        {
+          "input": "2 2\n1 2\n3 4",
+          "output": "2.5"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "0 1\n\n5",
+          "output": "5.0"
+        },
+        {
+          "input": "1 0\n7\n",
+          "output": "7.0"
+        },
+        {
+          "input": "3 0\n1 2 3\n",
+          "output": "2.0"
+        },
+        {
+          "input": "4 0\n1 2 3 4\n",
+          "output": "2.5"
+        },
+        {
+          "input": "3 3\n1 3 5\n2 4 6",
+          "output": "3.5"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n, m;\n    cin >> n >> m;\n    vector<long long> a(n), b(m);\n    for (int i = 0; i < n; i++) cin >> a[i];\n    for (int i = 0; i < m; i++) cin >> b[i];\n\n    // TODO: partition-based binary search on the smaller array to find the median\n    // print with exactly 1 decimal place, e.g. printf(\"%.1f\\n\", median);\n\n    return 0;\n}\n",
+      "hints": [
+        "Binary search a partition point on the smaller array; the partition on the larger array is determined by it.",
+        "You want maxLeft <= minRight across both partitions combined.",
+        "If total length is even, median = (maxLeft + minRight) / 2.0; if odd, median = maxLeft of the larger partition side."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "srt-001",
+      "slug": "bubble-sort",
+      "title": "Implement Bubble Sort",
+      "topic": "Sorting",
+      "difficulty": "Easy",
+      "tags": [
+        "sorting",
+        "bubble-sort"
+      ],
+      "statement": "Given an array, sort it in ascending order using the bubble sort algorithm and print the result.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers.",
+      "outputFormat": "n space-separated integers, sorted ascending.",
+      "constraints": [
+        "1 <= n <= 2000"
+      ],
+      "examples": [
+        {
+          "input": "5\n5 1 4 2 8",
+          "output": "1 2 4 5 8"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n1",
+          "output": "1"
+        },
+        {
+          "input": "4\n4 3 2 1",
+          "output": "1 2 3 4"
+        },
+        {
+          "input": "5\n1 1 1 1 1",
+          "output": "1 1 1 1 1"
+        },
+        {
+          "input": "6\n-3 5 -1 0 2 -2",
+          "output": "-3 -2 -1 0 2 5"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    // TODO: implement bubble sort (repeated adjacent swaps) in place\n\n    for (int i = 0; i < n; i++) cout << a[i] << (i + 1 < n ? ' ' : '\\n');\n    return 0;\n}\n",
+      "hints": [
+        "Repeatedly walk through the array, swapping adjacent elements that are out of order.",
+        "After each full pass, the largest unsorted element 'bubbles' to its correct position at the end.",
+        "You can stop early if a full pass makes no swaps."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "srt-002",
+      "slug": "merge-sort",
+      "title": "Implement Merge Sort",
+      "topic": "Sorting",
+      "difficulty": "Medium",
+      "tags": [
+        "sorting",
+        "merge-sort",
+        "divide-and-conquer"
+      ],
+      "statement": "Given an array, sort it in ascending order using merge sort (O(n log n)) and print the result.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers.",
+      "outputFormat": "n space-separated integers, sorted ascending.",
+      "constraints": [
+        "1 <= n <= 10^5"
+      ],
+      "examples": [
+        {
+          "input": "6\n38 27 43 3 9 82",
+          "output": "3 9 27 38 43 82"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n42",
+          "output": "42"
+        },
+        {
+          "input": "5\n5 4 3 2 1",
+          "output": "1 2 3 4 5"
+        },
+        {
+          "input": "7\n1 1 1 2 2 0 0",
+          "output": "0 0 1 1 1 2 2"
+        },
+        {
+          "input": "4\n-5 3 -2 8",
+          "output": "-5 -2 3 8"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nvoid mergeSort(vector<long long>& a, int l, int r) {\n    // TODO: recursively divide [l, r], sort halves, then merge them\n}\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    mergeSort(a, 0, n - 1);\n\n    for (int i = 0; i < n; i++) cout << a[i] << (i + 1 < n ? ' ' : '\\n');\n    return 0;\n}\n",
+      "hints": [
+        "Base case: a subarray of length <= 1 is already sorted.",
+        "Recursively sort the left half [l, mid] and right half [mid+1, r].",
+        "Merge the two sorted halves using a temporary buffer, comparing front elements of each half."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "srt-003",
+      "slug": "quick-sort",
+      "title": "Implement Quick Sort",
+      "topic": "Sorting",
+      "difficulty": "Medium",
+      "tags": [
+        "sorting",
+        "quick-sort",
+        "divide-and-conquer"
+      ],
+      "statement": "Given an array, sort it in ascending order using quick sort and print the result.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers.",
+      "outputFormat": "n space-separated integers, sorted ascending.",
+      "constraints": [
+        "1 <= n <= 10^5"
+      ],
+      "examples": [
+        {
+          "input": "7\n10 7 8 9 1 5 3",
+          "output": "1 3 5 7 8 9 10"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n9",
+          "output": "9"
+        },
+        {
+          "input": "3\n3 3 3",
+          "output": "3 3 3"
+        },
+        {
+          "input": "5\n1 2 3 4 5",
+          "output": "1 2 3 4 5"
+        },
+        {
+          "input": "6\n6 5 4 3 2 1",
+          "output": "1 2 3 4 5 6"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nvoid quickSort(vector<long long>& a, int lo, int hi) {\n    // TODO: pick a pivot, partition the range around it, and recurse on both sides\n}\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    quickSort(a, 0, n - 1);\n\n    for (int i = 0; i < n; i++) cout << a[i] << (i + 1 < n ? ' ' : '\\n');\n    return 0;\n}\n",
+      "hints": [
+        "Choose a pivot (e.g. the last element) and partition so smaller elements end up left of it, larger to the right.",
+        "The Lomuto partition scheme uses a single index tracking the boundary of 'elements smaller than pivot'.",
+        "Recurse on the subarrays to the left and right of the pivot's final position."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "srt-004",
+      "slug": "kth-largest-element",
+      "title": "Kth Largest Element in an Array",
+      "topic": "Sorting",
+      "difficulty": "Medium",
+      "tags": [
+        "sorting",
+        "quickselect",
+        "heap"
+      ],
+      "statement": "Given an array and an integer k, find the k-th largest element (1-indexed, so k=1 is the maximum).",
+      "inputFormat": "First line: n and k.\nSecond line: n space-separated integers.",
+      "outputFormat": "A single integer: the k-th largest element.",
+      "constraints": [
+        "1 <= k <= n <= 10^5"
+      ],
+      "examples": [
+        {
+          "input": "6 2\n3 2 1 5 6 4",
+          "output": "5"
+        },
+        {
+          "input": "9 4\n3 2 3 1 2 4 5 5 6",
+          "output": "4"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1 1\n7",
+          "output": "7"
+        },
+        {
+          "input": "5 5\n1 2 3 4 5",
+          "output": "1"
+        },
+        {
+          "input": "5 1\n1 2 3 4 5",
+          "output": "5"
+        },
+        {
+          "input": "6 3\n6 6 6 1 1 1",
+          "output": "6"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n, k;\n    cin >> n >> k;\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    // TODO: find the k-th largest element (sorting works, quickselect/heap is more efficient)\n\n    return 0;\n}\n",
+      "hints": [
+        "The simplest correct approach: sort descending and pick index k-1.",
+        "For better average performance, use quickselect (partition-based, like quicksort but recurse only one side).",
+        "A min-heap of size k is another O(n log k) approach: keep the k largest seen so far."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "srt-005",
+      "slug": "sort-colors",
+      "title": "Sort Colors (Dutch National Flag)",
+      "topic": "Sorting",
+      "difficulty": "Medium",
+      "tags": [
+        "sorting",
+        "two-pointers",
+        "dutch-flag"
+      ],
+      "statement": "Given an array containing only 0s, 1s, and 2s, sort it in a single pass using O(1) extra space (the Dutch National Flag algorithm).",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers, each 0, 1, or 2.",
+      "outputFormat": "n space-separated integers, sorted ascending.",
+      "constraints": [
+        "1 <= n <= 10^5"
+      ],
+      "examples": [
+        {
+          "input": "6\n2 0 2 1 1 0",
+          "output": "0 0 1 1 2 2"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n1",
+          "output": "1"
+        },
+        {
+          "input": "3\n0 0 0",
+          "output": "0 0 0"
+        },
+        {
+          "input": "3\n2 2 2",
+          "output": "2 2 2"
+        },
+        {
+          "input": "5\n1 0 2 1 0",
+          "output": "0 0 1 1 2"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    // TODO: three-pointer partition (low, mid, high) to sort 0s, 1s, 2s in one pass\n\n    for (int i = 0; i < n; i++) cout << a[i] << (i + 1 < n ? ' ' : '\\n');\n    return 0;\n}\n",
+      "hints": [
+        "Maintain three pointers: low (boundary for 0s), mid (current), high (boundary for 2s).",
+        "If a[mid] == 0, swap with low and advance both low and mid.",
+        "If a[mid] == 2, swap with high and decrement high (don't advance mid yet, since the swapped-in value is unchecked)."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "tr-001",
+      "slug": "inorder-traversal",
+      "title": "Binary Tree Inorder Traversal",
+      "topic": "Trees",
+      "difficulty": "Easy",
+      "tags": [
+        "trees",
+        "traversal",
+        "recursion"
+      ],
+      "statement": "Given a binary tree described in level-order (with -1 marking a null child), print its inorder traversal (left, root, right).",
+      "inputFormat": "First line: n (number of values in the level-order description).\nSecond line: n space-separated integers, level-order, using -1 for null. The first value is always the root and is never -1.",
+      "outputFormat": "The inorder traversal, space separated. Print nothing (empty line) if the tree is empty.",
+      "constraints": [
+        "1 <= n <= 2*10^4"
+      ],
+      "examples": [
+        {
+          "input": "7\n1 2 3 -1 -1 4 5",
+          "output": "2 1 4 3 5",
+          "explanation": "Root 1, left child 2 (leaf), right child 3 with children 4,5."
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n1",
+          "output": "1"
+        },
+        {
+          "input": "3\n1 2 -1",
+          "output": "2 1"
+        },
+        {
+          "input": "3\n1 -1 2",
+          "output": "1 2"
+        },
+        {
+          "input": "5\n5 3 8 -1 -1",
+          "output": "3 5 8"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Node {\n    long long val;\n    Node* left = nullptr;\n    Node* right = nullptr;\n    Node(long long v) : val(v) {}\n};\n\n// Builds a tree from a level-order array where -1 marks a null child.\nNode* buildTree(vector<long long>& vals) {\n    if (vals.empty() || vals[0] == -1) return nullptr;\n    Node* root = new Node(vals[0]);\n    queue<Node*> q;\n    q.push(root);\n    size_t i = 1;\n    while (!q.empty() && i < vals.size()) {\n        Node* cur = q.front(); q.pop();\n        if (i < vals.size()) {\n            long long lv = vals[i++];\n            if (lv != -1) { cur->left = new Node(lv); q.push(cur->left); }\n        }\n        if (i < vals.size()) {\n            long long rv = vals[i++];\n            if (rv != -1) { cur->right = new Node(rv); q.push(cur->right); }\n        }\n    }\n    return root;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> vals(n);\n    for (int i = 0; i < n; i++) cin >> vals[i];\n\n    Node* root = buildTree(vals);\n    vector<long long> result;\n\n    // TODO: fill `result` with the inorder traversal of the tree rooted at `root`\n\n    for (size_t i = 0; i < result.size(); i++) cout << result[i] << (i + 1 < result.size() ? ' ' : '\\n');\n    return 0;\n}\n",
+      "hints": [
+        "Inorder means: recurse left, visit the node, recurse right.",
+        "A recursive helper function is the simplest approach.",
+        "You can also do it iteratively with an explicit stack if you want to avoid recursion."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "tr-002",
+      "slug": "height-of-binary-tree",
+      "title": "Height of Binary Tree",
+      "topic": "Trees",
+      "difficulty": "Easy",
+      "tags": [
+        "trees",
+        "recursion"
+      ],
+      "statement": "Given a binary tree in level-order (-1 for null), find its height (number of edges on the longest root-to-leaf path). A single node has height 0.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers, level-order, -1 for null.",
+      "outputFormat": "A single integer: the height of the tree.",
+      "constraints": [
+        "1 <= n <= 2*10^4"
+      ],
+      "examples": [
+        {
+          "input": "7\n1 2 3 4 -1 -1 5",
+          "output": "2"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n1",
+          "output": "0"
+        },
+        {
+          "input": "3\n1 2 -1",
+          "output": "1"
+        },
+        {
+          "input": "5\n1 2 -1 3 -1",
+          "output": "2"
+        },
+        {
+          "input": "3\n1 -1 -1",
+          "output": "0"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Node {\n    long long val;\n    Node* left = nullptr;\n    Node* right = nullptr;\n    Node(long long v) : val(v) {}\n};\n\nNode* buildTree(vector<long long>& vals) {\n    if (vals.empty() || vals[0] == -1) return nullptr;\n    Node* root = new Node(vals[0]);\n    queue<Node*> q; q.push(root);\n    size_t i = 1;\n    while (!q.empty() && i < vals.size()) {\n        Node* cur = q.front(); q.pop();\n        if (i < vals.size()) { long long lv = vals[i++]; if (lv != -1) { cur->left = new Node(lv); q.push(cur->left); } }\n        if (i < vals.size()) { long long rv = vals[i++]; if (rv != -1) { cur->right = new Node(rv); q.push(cur->right); } }\n    }\n    return root;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> vals(n);\n    for (int i = 0; i < n; i++) cin >> vals[i];\n    Node* root = buildTree(vals);\n\n    // TODO: compute and print the height of the tree rooted at `root`\n\n    return 0;\n}\n",
+      "hints": [
+        "height(node) = 1 + max(height(left), height(right)), with height(null) = -1.",
+        "A single-node tree should give height 0 by this formula.",
+        "This is a straightforward post-order recursion."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "tr-003",
+      "slug": "level-order-traversal",
+      "title": "Binary Tree Level Order Traversal",
+      "topic": "Trees",
+      "difficulty": "Medium",
+      "tags": [
+        "trees",
+        "bfs"
+      ],
+      "statement": "Given a binary tree in level-order (-1 for null), print its level-order traversal, with each level on its own line.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers, level-order, -1 for null.",
+      "outputFormat": "One line per level, containing that level's values space separated, top to bottom.",
+      "constraints": [
+        "1 <= n <= 2*10^4"
+      ],
+      "examples": [
+        {
+          "input": "7\n3 9 20 -1 -1 15 7",
+          "output": "3\n9 20\n15 7"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n1",
+          "output": "1"
+        },
+        {
+          "input": "3\n1 2 3",
+          "output": "1\n2 3"
+        },
+        {
+          "input": "5\n1 2 -1 3 -1",
+          "output": "1\n2\n3"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Node {\n    long long val;\n    Node* left = nullptr;\n    Node* right = nullptr;\n    Node(long long v) : val(v) {}\n};\n\nNode* buildTree(vector<long long>& vals) {\n    if (vals.empty() || vals[0] == -1) return nullptr;\n    Node* root = new Node(vals[0]);\n    queue<Node*> q; q.push(root);\n    size_t i = 1;\n    while (!q.empty() && i < vals.size()) {\n        Node* cur = q.front(); q.pop();\n        if (i < vals.size()) { long long lv = vals[i++]; if (lv != -1) { cur->left = new Node(lv); q.push(cur->left); } }\n        if (i < vals.size()) { long long rv = vals[i++]; if (rv != -1) { cur->right = new Node(rv); q.push(cur->right); } }\n    }\n    return root;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> vals(n);\n    for (int i = 0; i < n; i++) cin >> vals[i];\n    Node* root = buildTree(vals);\n\n    // TODO: BFS level by level, printing each level's values on its own line\n\n    return 0;\n}\n",
+      "hints": [
+        "Use a queue for BFS. Process the queue one full level at a time.",
+        "Before processing a level, record its current size (queue.size()) so you know how many nodes belong to it.",
+        "Push children as you pop each node in the current level."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "tr-004",
+      "slug": "lca-in-bst",
+      "title": "Lowest Common Ancestor in a BST",
+      "topic": "Trees",
+      "difficulty": "Medium",
+      "tags": [
+        "trees",
+        "bst"
+      ],
+      "statement": "Given a binary search tree in level-order (-1 for null) and two values p and q known to exist in the tree, find the value of their lowest common ancestor.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers, level-order, -1 for null (a valid BST).\nThird line: p and q.",
+      "outputFormat": "A single integer: the value of the LCA.",
+      "constraints": [
+        "2 <= n <= 2*10^4",
+        "p and q both exist in the tree and are distinct."
+      ],
+      "examples": [
+        {
+          "input": "7\n6 2 8 0 4 7 9\n2 8",
+          "output": "6"
+        },
+        {
+          "input": "7\n6 2 8 0 4 7 9\n2 4",
+          "output": "2"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "3\n2 1 3\n1 3",
+          "output": "2"
+        },
+        {
+          "input": "5\n5 3 8 1 4\n1 4",
+          "output": "3"
+        },
+        {
+          "input": "5\n5 3 8 1 4\n1 8",
+          "output": "5"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Node {\n    long long val;\n    Node* left = nullptr;\n    Node* right = nullptr;\n    Node(long long v) : val(v) {}\n};\n\nNode* buildTree(vector<long long>& vals) {\n    if (vals.empty() || vals[0] == -1) return nullptr;\n    Node* root = new Node(vals[0]);\n    queue<Node*> q; q.push(root);\n    size_t i = 1;\n    while (!q.empty() && i < vals.size()) {\n        Node* cur = q.front(); q.pop();\n        if (i < vals.size()) { long long lv = vals[i++]; if (lv != -1) { cur->left = new Node(lv); q.push(cur->left); } }\n        if (i < vals.size()) { long long rv = vals[i++]; if (rv != -1) { cur->right = new Node(rv); q.push(cur->right); } }\n    }\n    return root;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> vals(n);\n    for (int i = 0; i < n; i++) cin >> vals[i];\n    Node* root = buildTree(vals);\n    long long p, q;\n    cin >> p >> q;\n\n    // TODO: use BST ordering to walk down from root to the LCA of p and q\n\n    return 0;\n}\n",
+      "hints": [
+        "In a BST, if both p and q are smaller than the current node, the LCA is in the left subtree.",
+        "If both are larger, the LCA is in the right subtree.",
+        "The first node where they diverge (or equal the node) is the LCA — you don't need recursion, a simple loop works."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "tr-005",
+      "slug": "diameter-of-binary-tree",
+      "title": "Diameter of Binary Tree",
+      "topic": "Trees",
+      "difficulty": "Medium",
+      "tags": [
+        "trees",
+        "recursion"
+      ],
+      "statement": "Given a binary tree in level-order (-1 for null), find its diameter: the length (in edges) of the longest path between any two nodes, which may or may not pass through the root.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers, level-order, -1 for null.",
+      "outputFormat": "A single integer: the diameter.",
+      "constraints": [
+        "1 <= n <= 2*10^4"
+      ],
+      "examples": [
+        {
+          "input": "7\n1 2 3 4 5 -1 -1",
+          "output": "3"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n1",
+          "output": "0"
+        },
+        {
+          "input": "3\n1 2 3",
+          "output": "2"
+        },
+        {
+          "input": "5\n1 2 -1 3 -1",
+          "output": "2"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Node {\n    long long val;\n    Node* left = nullptr;\n    Node* right = nullptr;\n    Node(long long v) : val(v) {}\n};\n\nNode* buildTree(vector<long long>& vals) {\n    if (vals.empty() || vals[0] == -1) return nullptr;\n    Node* root = new Node(vals[0]);\n    queue<Node*> q; q.push(root);\n    size_t i = 1;\n    while (!q.empty() && i < vals.size()) {\n        Node* cur = q.front(); q.pop();\n        if (i < vals.size()) { long long lv = vals[i++]; if (lv != -1) { cur->left = new Node(lv); q.push(cur->left); } }\n        if (i < vals.size()) { long long rv = vals[i++]; if (rv != -1) { cur->right = new Node(rv); q.push(cur->right); } }\n    }\n    return root;\n}\n\nint best = 0;\n\nint depth(Node* node) {\n    if (!node) return -1;\n    // TODO: compute depth of left and right, update `best` diameter, return this node's depth\n    return 0;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> vals(n);\n    for (int i = 0; i < n; i++) cin >> vals[i];\n    Node* root = buildTree(vals);\n\n    depth(root);\n    cout << best << \"\\n\";\n    return 0;\n}\n",
+      "hints": [
+        "For each node, the longest path through it is leftDepth + rightDepth + 2 (in edges).",
+        "Compute depth recursively (post-order) and update a global 'best' diameter as you go.",
+        "The final answer is the max diameter found across all nodes, not just the root."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "hp-001",
+      "slug": "kth-smallest-element-heap",
+      "title": "Kth Smallest Element using a Heap",
+      "topic": "Heap",
+      "difficulty": "Easy",
+      "tags": [
+        "heap",
+        "priority-queue"
+      ],
+      "statement": "Given an array and integer k, find the k-th smallest element using a heap-based approach.",
+      "inputFormat": "First line: n and k.\nSecond line: n space-separated integers.",
+      "outputFormat": "A single integer: the k-th smallest element.",
+      "constraints": [
+        "1 <= k <= n <= 10^5"
+      ],
+      "examples": [
+        {
+          "input": "6 3\n7 10 4 3 20 15",
+          "output": "7"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1 1\n9",
+          "output": "9"
+        },
+        {
+          "input": "5 5\n5 4 3 2 1",
+          "output": "5"
+        },
+        {
+          "input": "5 1\n5 4 3 2 1",
+          "output": "1"
+        },
+        {
+          "input": "4 2\n1 1 2 2",
+          "output": "1"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n, k;\n    cin >> n >> k;\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    // TODO: use a max-heap of size k (keep the k smallest seen so far) to find the k-th smallest\n\n    return 0;\n}\n",
+      "hints": [
+        "Maintain a max-heap containing at most k elements — the k smallest seen so far.",
+        "For each new element, push it, and if the heap size exceeds k, pop the max.",
+        "After processing all elements, the top of the heap is the k-th smallest."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "hp-002",
+      "slug": "merge-k-sorted-arrays",
+      "title": "Merge K Sorted Arrays",
+      "topic": "Heap",
+      "difficulty": "Hard",
+      "tags": [
+        "heap",
+        "priority-queue",
+        "merge"
+      ],
+      "statement": "Given k sorted arrays, merge them into a single sorted array using a min-heap.",
+      "inputFormat": "First line: k.\nEach of the next k lines starts with the array's size followed by that many sorted integers.",
+      "outputFormat": "The fully merged, sorted array, space separated.",
+      "constraints": [
+        "1 <= k <= 100",
+        "0 <= size of each array <= 1000"
+      ],
+      "examples": [
+        {
+          "input": "3\n3 1 4 5\n3 1 3 4\n3 2 6 8",
+          "output": "1 1 2 3 4 4 5 6 8"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n3 5 6 7",
+          "output": "5 6 7"
+        },
+        {
+          "input": "2\n0\n2 1 2",
+          "output": "1 2"
+        },
+        {
+          "input": "2\n2 -3 -1\n2 -2 0",
+          "output": "-3 -2 -1 0"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int k;\n    cin >> k;\n    vector<vector<long long>> arrs(k);\n    for (int i = 0; i < k; i++) {\n        int sz; cin >> sz;\n        arrs[i].resize(sz);\n        for (int j = 0; j < sz; j++) cin >> arrs[i][j];\n    }\n\n    // TODO: use a min-heap of (value, arrayIndex, elementIndex) to merge all arrays\n\n    return 0;\n}\n",
+      "hints": [
+        "Push the first element of each non-empty array into a min-heap, tagged with its array and index.",
+        "Pop the minimum, add it to the result, then push the next element from the same array (if any).",
+        "This runs in O(N log k) where N is the total number of elements."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "hp-003",
+      "slug": "top-k-frequent-elements",
+      "title": "Top K Frequent Elements",
+      "topic": "Heap",
+      "difficulty": "Medium",
+      "tags": [
+        "heap",
+        "hash-map",
+        "priority-queue"
+      ],
+      "statement": "Given an integer array and an integer k, return the k most frequent elements. If there is a tie in frequency, prefer the smaller value. Print them from most to least frequent.",
+      "inputFormat": "First line: n and k.\nSecond line: n space-separated integers.",
+      "outputFormat": "k space-separated integers: the top k frequent elements, most frequent first.",
+      "constraints": [
+        "1 <= k <= n <= 10^5"
+      ],
+      "examples": [
+        {
+          "input": "6 2\n1 1 1 2 2 3",
+          "output": "1 2"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1 1\n5",
+          "output": "5"
+        },
+        {
+          "input": "5 1\n4 4 4 4 4",
+          "output": "4"
+        },
+        {
+          "input": "6 3\n1 2 3 1 2 1",
+          "output": "1 2 3"
+        },
+        {
+          "input": "7 2\n5 5 6 6 7 7 7",
+          "output": "7 5"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n, k;\n    cin >> n >> k;\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    // TODO: count frequencies with a hash map, then use a heap to extract the k most frequent\n    // (break ties by preferring the smaller value)\n\n    return 0;\n}\n",
+      "hints": [
+        "First build a frequency map with an unordered_map.",
+        "Push (frequency, value) pairs into a max-heap, ordered by frequency desc then value asc.",
+        "Pop k elements from the heap to get the answer in the right order."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "hp-004",
+      "slug": "median-in-a-stream",
+      "title": "Median in a Stream",
+      "topic": "Heap",
+      "difficulty": "Hard",
+      "tags": [
+        "heap",
+        "two-heaps",
+        "design"
+      ],
+      "statement": "Process a stream of integers one at a time. After each insertion, output the median of all numbers seen so far, using two heaps for O(log n) insertion.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated integers, the stream in order.",
+      "outputFormat": "n lines: the median after each insertion. If the count is even, print the average of the two middle values (with 1 decimal place); if odd, print the middle value (also with 1 decimal place).",
+      "constraints": [
+        "1 <= n <= 10^5"
+      ],
+      "examples": [
+        {
+          "input": "4\n5 15 1 3",
+          "output": "5.0\n10.0\n5.0\n4.0"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1\n7",
+          "output": "7.0"
+        },
+        {
+          "input": "2\n1 2",
+          "output": "1.0\n1.5"
+        },
+        {
+          "input": "3\n1 2 3",
+          "output": "1.0\n1.5\n2.0"
+        },
+        {
+          "input": "5\n1 1 1 1 1",
+          "output": "1.0\n1.0\n1.0\n1.0\n1.0"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n\n    // TODO: maintain a max-heap for the lower half and a min-heap for the upper half,\n    // keeping their sizes balanced (differ by at most 1); print the median after each insert\n\n    for (int i = 0; i < n; i++) {\n        long long x; cin >> x;\n        // insert x, rebalance, then printf(\"%.1f\\n\", median);\n    }\n    return 0;\n}\n",
+      "hints": [
+        "Use a max-heap for the smaller half of numbers, and a min-heap for the larger half.",
+        "After every insertion, rebalance so the heap sizes differ by at most 1.",
+        "If sizes are equal, median = average of both tops; otherwise median = top of the larger heap."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "hp-005",
+      "slug": "connect-ropes-minimum-cost",
+      "title": "Connect Ropes with Minimum Cost",
+      "topic": "Heap",
+      "difficulty": "Medium",
+      "tags": [
+        "heap",
+        "greedy"
+      ],
+      "statement": "You have `n` ropes of given lengths. Connecting two ropes costs the sum of their lengths. Find the minimum total cost to connect all ropes into one.",
+      "inputFormat": "First line: n.\nSecond line: n space-separated positive integers, the rope lengths.",
+      "outputFormat": "A single integer: the minimum total cost.",
+      "constraints": [
+        "1 <= n <= 10^5",
+        "1 <= length <= 10^4"
+      ],
+      "examples": [
+        {
+          "input": "4\n4 3 2 6",
+          "output": "29"
+        },
+        {
+          "input": "1\n5",
+          "output": "0"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "2\n1 2",
+          "output": "3"
+        },
+        {
+          "input": "3\n1 2 3",
+          "output": "9"
+        },
+        {
+          "input": "5\n1 2 3 4 5",
+          "output": "33"
+        },
+        {
+          "input": "4\n1 1 1 1",
+          "output": "8"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<long long> ropes(n);\n    for (int i = 0; i < n; i++) cin >> ropes[i];\n\n    // TODO: use a min-heap; repeatedly combine the two smallest ropes, accumulating cost\n\n    return 0;\n}\n",
+      "hints": [
+        "This is a classic greedy problem: always merge the two currently-smallest pieces.",
+        "Use a min-heap to always have quick access to the two smallest ropes.",
+        "Each merge cost adds to the total; push the merged length back into the heap."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "gr-001",
+      "slug": "bfs-traversal",
+      "title": "BFS Traversal of a Graph",
+      "topic": "Graphs",
+      "difficulty": "Easy",
+      "tags": [
+        "graphs",
+        "bfs"
+      ],
+      "statement": "Given an undirected graph with `n` nodes (0-indexed) and a list of edges, print the BFS traversal starting from node 0. When multiple neighbors are available, visit them in increasing order.",
+      "inputFormat": "First line: n and m (nodes, edges).\nEach of the next m lines: u v, an edge between u and v.",
+      "outputFormat": "The BFS order, space separated.",
+      "constraints": [
+        "1 <= n <= 10^4",
+        "0 <= m <= 2*10^4"
+      ],
+      "examples": [
+        {
+          "input": "5 4\n0 1\n0 2\n1 3\n2 4",
+          "output": "0 1 2 3 4"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1 0\n",
+          "output": "0"
+        },
+        {
+          "input": "3 2\n0 1\n1 2",
+          "output": "0 1 2"
+        },
+        {
+          "input": "4 2\n0 1\n2 3",
+          "output": "0 1 2 3"
+        },
+        {
+          "input": "6 5\n0 1\n0 2\n1 3\n1 4\n2 5",
+          "output": "0 1 2 3 4 5"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n, m;\n    cin >> n >> m;\n    vector<vector<int>> adj(n);\n    for (int i = 0; i < m; i++) {\n        int u, v; cin >> u >> v;\n        adj[u].push_back(v);\n        adj[v].push_back(u);\n    }\n    for (int i = 0; i < n; i++) sort(adj[i].begin(), adj[i].end());\n\n    // TODO: BFS starting at node 0; note the graph may be disconnected (visit remaining nodes in order)\n\n    return 0;\n}\n",
+      "hints": [
+        "Use a queue and a visited array, standard BFS from node 0.",
+        "Sort each node's adjacency list so neighbors are visited in increasing order.",
+        "If the graph is disconnected, after finishing BFS from 0, continue BFS from any unvisited node in increasing order."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "gr-002",
+      "slug": "dfs-traversal",
+      "title": "DFS Traversal of a Graph",
+      "topic": "Graphs",
+      "difficulty": "Easy",
+      "tags": [
+        "graphs",
+        "dfs"
+      ],
+      "statement": "Given an undirected graph with `n` nodes and a list of edges, print the DFS traversal starting from node 0, visiting neighbors in increasing order.",
+      "inputFormat": "First line: n and m.\nEach of the next m lines: u v.",
+      "outputFormat": "The DFS order, space separated.",
+      "constraints": [
+        "1 <= n <= 10^4",
+        "0 <= m <= 2*10^4"
+      ],
+      "examples": [
+        {
+          "input": "5 4\n0 1\n0 2\n1 3\n2 4",
+          "output": "0 1 3 2 4"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1 0\n",
+          "output": "0"
+        },
+        {
+          "input": "3 2\n0 1\n1 2",
+          "output": "0 1 2"
+        },
+        {
+          "input": "4 3\n0 1\n1 2\n1 3",
+          "output": "0 1 2 3"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<vector<int>> adj;\nvector<bool> visited;\nvector<int> order;\n\nvoid dfs(int node) {\n    // TODO: mark visited, append to order, recurse into unvisited neighbors (increasing order)\n}\n\nint main() {\n    int n, m;\n    cin >> n >> m;\n    adj.assign(n, {});\n    visited.assign(n, false);\n    for (int i = 0; i < m; i++) {\n        int u, v; cin >> u >> v;\n        adj[u].push_back(v);\n        adj[v].push_back(u);\n    }\n    for (int i = 0; i < n; i++) sort(adj[i].begin(), adj[i].end());\n\n    dfs(0);\n    for (int u = 0; u < n; u++) if (!visited[u]) dfs(u);\n\n    for (size_t i = 0; i < order.size(); i++) cout << order[i] << (i + 1 < order.size() ? ' ' : '\\n');\n    return 0;\n}\n",
+      "hints": [
+        "Standard recursive DFS: mark the node visited, record it, then recurse into each unvisited neighbor.",
+        "Sort adjacency lists first so neighbors are explored in increasing numeric order.",
+        "Handle disconnected graphs by starting a new DFS from any unvisited node after the first one finishes."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "gr-003",
+      "slug": "number-of-islands",
+      "title": "Number of Islands",
+      "topic": "Graphs",
+      "difficulty": "Medium",
+      "tags": [
+        "graphs",
+        "bfs",
+        "dfs",
+        "grid"
+      ],
+      "statement": "Given a grid of `1`s (land) and `0`s (water), count the number of islands. An island is formed by connecting adjacent lands horizontally or vertically.",
+      "inputFormat": "First line: rows and cols.\nNext `rows` lines: a string of `0`s and `1`s of length `cols`.",
+      "outputFormat": "A single integer: the number of islands.",
+      "constraints": [
+        "1 <= rows, cols <= 300"
+      ],
+      "examples": [
+        {
+          "input": "4 5\n11110\n11010\n11000\n00000",
+          "output": "1"
+        },
+        {
+          "input": "4 5\n11000\n11000\n00100\n00011",
+          "output": "3"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1 1\n0",
+          "output": "0"
+        },
+        {
+          "input": "1 1\n1",
+          "output": "1"
+        },
+        {
+          "input": "3 3\n101\n000\n101",
+          "output": "4"
+        },
+        {
+          "input": "2 2\n11\n11",
+          "output": "1"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int rows, cols;\n    cin >> rows >> cols;\n    vector<string> grid(rows);\n    for (int i = 0; i < rows; i++) cin >> grid[i];\n\n    // TODO: flood-fill (BFS or DFS) from each unvisited '1' cell, counting islands\n\n    return 0;\n}\n",
+      "hints": [
+        "Scan every cell; when you find an unvisited '1', that's a new island — increment the count.",
+        "From that cell, flood-fill (BFS or DFS) marking all connected '1' cells as visited.",
+        "Only 4-directional adjacency (up/down/left/right) counts as connected."
+      ],
+      "timeLimitMs": 2000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "gr-004",
+      "slug": "detect-cycle-undirected-graph",
+      "title": "Detect Cycle in an Undirected Graph",
+      "topic": "Graphs",
+      "difficulty": "Medium",
+      "tags": [
+        "graphs",
+        "dfs",
+        "union-find"
+      ],
+      "statement": "Given an undirected graph, determine whether it contains a cycle.",
+      "inputFormat": "First line: n and m.\nEach of the next m lines: u v.",
+      "outputFormat": "Print \"true\" if a cycle exists, otherwise \"false\".",
+      "constraints": [
+        "1 <= n <= 10^4",
+        "0 <= m <= 2*10^4"
+      ],
+      "examples": [
+        {
+          "input": "5 5\n0 1\n1 2\n2 3\n3 4\n4 0",
+          "output": "true"
+        },
+        {
+          "input": "5 4\n0 1\n1 2\n2 3\n3 4",
+          "output": "false"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1 0\n",
+          "output": "false"
+        },
+        {
+          "input": "3 3\n0 1\n1 2\n2 0",
+          "output": "true"
+        },
+        {
+          "input": "4 2\n0 1\n2 3",
+          "output": "false"
+        },
+        {
+          "input": "6 6\n0 1\n1 2\n2 0\n3 4\n4 5\n5 3",
+          "output": "true"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n, m;\n    cin >> n >> m;\n    vector<vector<int>> adj(n);\n    vector<pair<int,int>> edges(m);\n    for (int i = 0; i < m; i++) {\n        int u, v; cin >> u >> v;\n        adj[u].push_back(v);\n        adj[v].push_back(u);\n        edges[i] = {u, v};\n    }\n\n    // TODO: detect a cycle using DFS (track parent) or union-find across all components\n\n    return 0;\n}\n",
+      "hints": [
+        "DFS approach: for each unvisited node, DFS while tracking the parent that led to the current node.",
+        "If you reach a visited neighbor that is NOT the parent, a cycle exists.",
+        "Alternatively, use union-find: if an edge connects two nodes already in the same set, that's a cycle."
+      ],
+      "timeLimitMs": 1000,
+      "memoryLimitMb": 256
+    },
+    {
+      "id": "gr-005",
+      "slug": "dijkstra-shortest-path",
+      "title": "Dijkstra's Shortest Path",
+      "topic": "Graphs",
+      "difficulty": "Hard",
+      "tags": [
+        "graphs",
+        "dijkstra",
+        "shortest-path",
+        "heap"
+      ],
+      "statement": "Given a weighted, undirected graph with `n` nodes and non-negative edge weights, find the shortest distance from node 0 to every other node. If a node is unreachable, its distance is -1.",
+      "inputFormat": "First line: n and m.\nEach of the next m lines: u v w (an edge between u and v with weight w).",
+      "outputFormat": "n space-separated integers: shortest distance from node 0 to node i, for i = 0..n-1.",
+      "constraints": [
+        "1 <= n <= 10^4",
+        "0 <= m <= 2*10^4",
+        "0 <= w <= 1000"
+      ],
+      "examples": [
+        {
+          "input": "5 6\n0 1 4\n0 2 1\n2 1 2\n1 3 1\n2 3 5\n3 4 3",
+          "output": "0 3 1 4 7"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": "1 0\n",
+          "output": "0"
+        },
+        {
+          "input": "3 1\n0 1 5\n",
+          "output": "0 5 -1"
+        },
+        {
+          "input": "4 3\n0 1 1\n1 2 1\n2 3 1",
+          "output": "0 1 2 3"
+        },
+        {
+          "input": "3 3\n0 1 10\n0 2 3\n2 1 2",
+          "output": "0 5 3"
+        }
+      ],
+      "starterCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n, m;\n    cin >> n >> m;\n    vector<vector<pair<int,long long>>> adj(n); // neighbor, weight\n    for (int i = 0; i < m; i++) {\n        int u, v; long long w;\n        cin >> u >> v >> w;\n        adj[u].push_back({v, w});\n        adj[v].push_back({u, w});\n    }\n\n    // TODO: run Dijkstra's algorithm from node 0 using a min-heap; print -1 for unreachable nodes\n\n    return 0;\n}\n",
+      "hints": [
+        "Use a min-heap (priority_queue) of (distance, node), always expanding the closest unvisited node.",
+        "Initialize all distances to infinity except node 0, which is 0.",
+        "When popping a node, if its recorded distance in the heap is stale (worse than the current best), skip it."
+      ],
+      "timeLimitMs": 2000,
+      "memoryLimitMb": 256
+    }
+  ]
+}
