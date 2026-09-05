@@ -1,0 +1,36 @@
+# Netlify build configuration.
+#
+# This repo is a small monorepo: the deployable frontend lives in ./frontend,
+# while ./execution-service is a separate Node service (compiles/runs C++ via
+# local g++) that must be deployed elsewhere (Render, Fly.io, a VPS, etc, see
+# README.md). Only the `frontend` directory is ever built or published by
+# Netlify. No Netlify Functions are used in this project.
+
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Client-side routing fallback: without this, refreshing or deep-linking to
+# routes like /problems/two-sum returns Netlify's 404 page instead of the app.
+# (Also present as frontend/public/_redirects, which Vite copies into dist/
+# automatically, this block is a redundant safety net for the same rule.)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
