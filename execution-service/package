@@ -1,0 +1,15 @@
+{
+  "name": "codeforge-execution-service",
+  "version": "1.0.0",
+  "description": "C++ compile-and-run service for CodeForge. Local mode: compiles/runs code directly on this machine using the g++ on PATH (no Docker, no sandbox isolation — suitable for running your own code locally, not for untrusted public users).",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
